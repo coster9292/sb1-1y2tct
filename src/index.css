@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg
+           focus:ring-2 focus:ring-teal-500 focus:border-transparent
+           placeholder-gray-400 transition-all duration-200;
+  }
+
+  .select-field {
+    @apply w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg
+           focus:ring-2 focus:ring-teal-500 focus:border-transparent
+           transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-teal-600 text-white rounded-lg font-medium
+           hover:bg-teal-700 transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-white text-gray-700 rounded-lg font-medium
+           border border-gray-200 hover:bg-gray-50 transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
+  }
+
+  .modern-checkbox {
+    @apply relative flex items-center;
+  }
+
+  .modern-checkbox input[type="checkbox"] {
+    @apply absolute opacity-0 w-0 h-0;
+  }
+
+  .modern-checkbox .checkbox-label {
+    @apply relative pl-12 select-none text-sm font-medium text-gray-700
+           cursor-pointer transition-all duration-200 bg-white/95 backdrop-blur-sm
+           py-2 px-4 rounded-lg shadow-sm border border-gray-200
+           hover:border-teal-200 hover:bg-white;
+  }
+
+  .modern-checkbox .checkbox-label:before {
+    content: '';
+    @apply absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6
+           bg-white border-2 border-gray-200 rounded-lg
+           transition-all duration-200;
+  }
+
+  .modern-checkbox input[type="checkbox"]:checked + .checkbox-label {
+    @apply border-teal-200 bg-white text-teal-700;
+  }
+
+  .modern-checkbox input[type="checkbox"]:checked + .checkbox-label:before {
+    @apply border-teal-500 bg-teal-500;
+  }
+
+  .modern-checkbox .checkbox-label:after {
+    content: '';
+    @apply absolute left-[18px] top-1/2 -translate-y-1/2
+           w-3 h-3 opacity-0 transform scale-50
+           transition-all duration-200;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  }
+
+  .modern-checkbox input[type="checkbox"]:checked + .checkbox-label:after {
+    @apply opacity-100 scale-100;
+  }
+
+  .modern-checkbox:hover .checkbox-label:before {
+    @apply border-teal-200;
+  }
+
+  .modern-checkbox input[type="checkbox"]:focus + .checkbox-label {
+    @apply ring-2 ring-teal-500/20 ring-offset-2;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
