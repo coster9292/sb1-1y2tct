@@ -1,7 +1,7 @@
 import { Car } from '../types/car';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.autoyard.eu/theparking-eu';
+const API_BASE_URL = 'https://api.autoyard.eu';
 const MAX_ITEMS_PER_REQUEST = 100;
 
 interface ApiResponse {
@@ -43,20 +43,24 @@ export async function searchCars(
 ): Promise<{ cars: Car[]; total: number }> {
   try {
     const offset = (page - 1) * limit;
-    
+
     // Clean up filters by removing undefined and empty values
-    const cleanFilters = Object.entries(filters).reduce((acc, [key, value]) => {
+    console.log('Filters:', filters);
+    const cleanFilters = Object.entries(filters).reduce((acc: any, [key, value]) => {
       if (value !== undefined && value !== '') {
         // Map frontend filter names to API parameter names
         switch (key) {
-          case 'maxMileage':
-            acc.mileage_to = value;
-            break;
           case 'yearFrom':
             acc.year_from = value;
             break;
-          case 'priceTo':
+          case 'minPrice':
+            acc.price_from = value;
+            break;
+          case 'maxPrice':
             acc.price_to = value;
+            break;
+          case 'maxMileage':
+            acc.mileage_to = value;
             break;
           default:
             acc[key] = value;
@@ -73,7 +77,7 @@ export async function searchCars(
     };
 
     const response = await axios.post<ApiResponse>(
-      `${API_BASE_URL}/list?limit=${limit}&offset=${offset}&order=crawled_at&order_type=DESC`,
+      `${API_BASE_URL}/theparking-eu/list?limit=${limit}&offset=${offset}&order=crawled_at&order_type=DESC`,
       searchParams,
       {
         headers: {
@@ -104,7 +108,7 @@ export async function searchCars(
 export async function getCarById(carId: number): Promise<Car> {
   try {
     const response = await axios.get<SingleCarResponse>(
-      `${API_BASE_URL}/${carId}`,
+      `${API_BASE_URL}/theparking-eu/${carId}`,
       {
         headers: {
           'Accept': 'application/json',

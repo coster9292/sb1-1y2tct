@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { X, ChevronDown, ChevronUp, RefreshCw, Info, Search } from 'lucide-react';
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, RefreshCw, Info, Search } from 'lucide-react';
 import { MakeModelFilter } from './filters/MakeModelFilter';
 import { YearFilter } from './filters/YearFilter';
-import { PriceFilter } from './filters/PriceFilter';
+// import { PriceFilter } from './filters/PriceFilter';
+import { PriceRangeFilter } from './filters/PriceRangeFilter';
 import { LocationFilter } from './filters/LocationFilter';
 import { TransmissionFilter } from './filters/TransmissionFilter';
 import { FuelTypeFilter } from './filters/FuelTypeFilter';
-import { MileageFilter } from './MileageFilter';
+// import { MileageFilter } from './MileageFilter';
 import { Tooltip } from './Tooltip';
 
 export interface FilterOptions {
   make?: string;
   model?: string;
   yearFrom?: number;
-  priceTo?: number;
+  minPrice?: number;
+  maxPrice?: number;
   mileageFrom?: number;
   mileageTo?: number;
   transmission?: string;
@@ -48,6 +50,14 @@ export function Filters({
     } else {
       onFilterChange({ ...filters, [key]: value || undefined });
     }
+  };
+
+  const handlePriceChange = (priceFrom: number | undefined, priceTo: number | undefined) => {
+    onFilterChange({
+      ...filters,
+      minPrice: priceFrom,
+      maxPrice: priceTo
+    });
   };
 
   const handleMileageChange = (minMileage: number | undefined, maxMileage: number | undefined) => {
@@ -97,16 +107,22 @@ export function Filters({
             onChange={(value) => updateFilter('yearFrom', value)}
           />
 
-          <PriceFilter
+          {/* <PriceFilter
             value={filters.priceTo}
             onChange={(value) => updateFilter('priceTo', value)}
+          /> */}
+
+          <PriceRangeFilter
+            priceFrom={filters.minPrice}
+            priceTo={filters.maxPrice}
+            onChange={handlePriceChange}
           />
 
-          <MileageFilter
+          {/* <MileageFilter
             minMileage={filters.mileageFrom}
             maxMileage={filters.mileageTo}
             onChange={handleMileageChange}
-          />
+          /> */}
         </div>
 
         <button
