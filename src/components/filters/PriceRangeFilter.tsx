@@ -1,27 +1,29 @@
-import React from 'react';
-import * as Slider from '@radix-ui/react-slider';
+import { useState, useEffect } from 'react';
+// import * as Slider from '@radix-ui/react-slider';
 
 interface PriceRangeFilterProps {
-  minPrice?: number;
-  maxPrice?: number;
-  onChange: (minPrice: number | undefined, maxPrice: number | undefined) => void;
+  priceFrom?: number;
+  priceTo?: number;
+  onChange: (priceFrom: number | undefined, priceTo: number | undefined) => void;
 }
 
-export function PriceRangeFilter({ minPrice, maxPrice, onChange }: PriceRangeFilterProps) {
+export function PriceRangeFilter({ priceFrom, priceTo, onChange }: PriceRangeFilterProps) {
   const MIN_PRICE = 0;
   const MAX_PRICE = 1000000; // 1 million euros
   const STEP = 1000;
 
-  // Set default values if undefined
-  const defaultMinPrice = minPrice ?? MIN_PRICE;
-  const defaultMaxPrice = maxPrice ?? MAX_PRICE;
+  // Use internal state to fully control slider values
+  const [range, setRange] = useState<[number, number]>([
+    priceFrom ?? MIN_PRICE,
+    priceTo ?? MAX_PRICE
+  ]);
 
-  const handleSliderChange = (values: number[]) => {
-    onChange(
-      values[0] === MIN_PRICE ? undefined : values[0],
-      values[1] === MAX_PRICE ? undefined : values[1]
-    );
-  };
+  // Update the range state if priceFrom or priceTo props change
+  useEffect(() => {
+    setRange([priceFrom ?? MIN_PRICE, priceTo ?? MAX_PRICE]);
+  }, [priceFrom, priceTo]);
+
+
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -31,6 +33,7 @@ export function PriceRangeFilter({ minPrice, maxPrice, onChange }: PriceRangeFil
     }).format(value);
   };
 
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -38,18 +41,17 @@ export function PriceRangeFilter({ minPrice, maxPrice, onChange }: PriceRangeFil
           Price Range
         </label>
         <div className="text-sm text-gray-500">
-          {formatPrice(defaultMinPrice)} - {formatPrice(defaultMaxPrice)}
+          {formatPrice(range[0])} - {formatPrice(range[1])}
         </div>
       </div>
 
-      <div className="px-2 py-4">
+      {/* <div className="px-2 py-4">
         <Slider.Root
           className="relative flex items-center select-none touch-none w-full h-5"
-          defaultValue={[defaultMinPrice, defaultMaxPrice]}
+          value={range}
           min={MIN_PRICE}
           max={MAX_PRICE}
           step={STEP}
-          minStepsBetweenThumbs={STEP}
           onValueChange={handleSliderChange}
         >
           <Slider.Track className="bg-gray-200 relative grow rounded-full h-[3px]">
@@ -68,16 +70,18 @@ export function PriceRangeFilter({ minPrice, maxPrice, onChange }: PriceRangeFil
             aria-label="Maximum price"
           />
         </Slider.Root>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-2 gap-4">
         <div>
           <input
             type="number"
-            value={minPrice || ''}
+            value={range[0]}
             onChange={(e) => {
-              const value = e.target.value ? parseInt(e.target.value) : undefined;
-              onChange(value, maxPrice);
+              const value = e.target.value ? parseInt(e.target.value) : MIN_PRICE;
+              const newRange: [number, number] = [Math.min(value, range[1]), range[1]];
+              setRange(newRange);
+              onChange(newRange[0], newRange[1]);
             }}
             min={MIN_PRICE}
             max={MAX_PRICE}
@@ -89,10 +93,12 @@ export function PriceRangeFilter({ minPrice, maxPrice, onChange }: PriceRangeFil
         <div>
           <input
             type="number"
-            value={maxPrice || ''}
+            value={range[1]}
             onChange={(e) => {
-              const value = e.target.value ? parseInt(e.target.value) : undefined;
-              onChange(minPrice, value);
+              const value = e.target.value ? parseInt(e.target.value) : 0;
+              const newRange: [number, number] = [range[0], Math.max(value)];
+              // setRange(newRange);
+              onChange(newRange[0], newRange[1]);
             }}
             min={MIN_PRICE}
             max={MAX_PRICE}

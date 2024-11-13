@@ -21,7 +21,7 @@ export function HomePage() {
   // Parse URL parameters on mount
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const urlFilters: FilterOptions = {};
+    const urlFilters: FilterOptions|any = {};
     
     // Map URL parameters to filter options
     searchParams.forEach((value, key) => {
@@ -53,6 +53,8 @@ export function HomePage() {
       try {
         setLoading(true);
         setError(null);
+
+        await new Promise(r => setTimeout(r, 100));
 
         const { cars: newCars, total } = await searchCars(
           '', 
