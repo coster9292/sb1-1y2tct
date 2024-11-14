@@ -1,8 +1,11 @@
 import { Car } from '../types/car';
 import axios from 'axios';
 
-const API_BASE_URL = 'https://api.autoyard.eu';
+const API_BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3138' : 'https://api.autoyard.eu';
 const MAX_ITEMS_PER_REQUEST = 100;
+
+console.log('process.env.NODE_ENV::', process.env.NODE_ENV);
+console.log('API_BASE_URL::', API_BASE_URL);
 
 interface ApiResponse {
   success: boolean;
