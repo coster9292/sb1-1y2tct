@@ -108,11 +108,6 @@ export function Filters({
             onChange={(value) => updateFilter('yearFrom', value)}
           />
 
-          {/* <PriceFilter
-            value={filters.priceTo}
-            onChange={(value) => updateFilter('priceTo', value)}
-          /> */}
-
           <PriceRangeFilter
             priceFrom={filters.minPrice}
             priceTo={filters.maxPrice}
