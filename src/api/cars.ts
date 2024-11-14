@@ -21,21 +21,24 @@ interface SingleCarResponse {
 }
 
 interface SearchParams {
-  query?: string;
   make?: string;
   model?: string;
+  version?: string;
+  location?: string;
   price_from?: number;
   price_to?: number;
-  year_from?: number;
-  year_to?: number;
   mileage_from?: number;
   mileage_to?: number;
-  transmission?: string;
+  has_image?: boolean;
   fuel?: string;
+  transmission?: string;
   color?: string;
   doors?: number;
-  location?: string;
-  has_image?: boolean;
+  year_from?: number;
+  year_to?: number;
+  ad_title?: string;
+  date_published_from?: string;
+  date_published_to?: string;
 }
 
 export async function searchCars(
@@ -61,6 +64,9 @@ export async function searchCars(
             break;
           case 'maxPrice':
             acc.price_to = value;
+            break;
+          case 'minMileage':
+            acc.mileage_from = value;
             break;
           case 'maxMileage':
             acc.mileage_to = value;

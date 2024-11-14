@@ -4,6 +4,7 @@ import { MakeModelFilter } from './filters/MakeModelFilter';
 import { YearFilter } from './filters/YearFilter';
 // import { PriceFilter } from './filters/PriceFilter';
 import { PriceRangeFilter } from './filters/PriceRangeFilter';
+import { MileageRangeFilter } from './filters/MileageRangeFilter';
 import { LocationFilter } from './filters/LocationFilter';
 import { TransmissionFilter } from './filters/TransmissionFilter';
 import { FuelTypeFilter } from './filters/FuelTypeFilter';
@@ -16,8 +17,8 @@ export interface FilterOptions {
   yearFrom?: number;
   minPrice?: number;
   maxPrice?: number;
-  mileageFrom?: number;
-  mileageTo?: number;
+  minMileage?: number;
+  maxMileage?: number;
   transmission?: string;
   fuel?: string;
   color?: string;
@@ -60,11 +61,11 @@ export function Filters({
     });
   };
 
-  const handleMileageChange = (minMileage: number | undefined, maxMileage: number | undefined) => {
+  const handleMileageChange = (mileageFrom: number | undefined, mileageTo: number | undefined) => {
     onFilterChange({
       ...filters,
-      mileageFrom: minMileage,
-      mileageTo: maxMileage
+      minMileage: mileageFrom,
+      maxMileage: mileageTo
     });
   };
 
@@ -118,11 +119,12 @@ export function Filters({
             onChange={handlePriceChange}
           />
 
-          {/* <MileageFilter
-            minMileage={filters.mileageFrom}
-            maxMileage={filters.mileageTo}
+          <MileageRangeFilter
+            mileageFrom={filters.minMileage}
+            mileageTo={filters.maxMileage}
             onChange={handleMileageChange}
-          /> */}
+          />
+
         </div>
 
         <button
