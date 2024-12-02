@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, RefreshCw, Info, Search } from 'lucide-react';
-import { MakeModelFilter } from './filters/MakeModelFilter';
+import { MakeFilter } from './filters/MakeFilter';
+import { ModelFilter } from './filters/ModelFilter';
+
 import { YearFilter } from './filters/YearFilter';
-// import { PriceFilter } from './filters/PriceFilter';
 import { PriceRangeFilter } from './filters/PriceRangeFilter';
 import { MileageRangeFilter } from './filters/MileageRangeFilter';
 import { LocationFilter } from './filters/LocationFilter';
 import { TransmissionFilter } from './filters/TransmissionFilter';
 import { FuelTypeFilter } from './filters/FuelTypeFilter';
-// import { MileageFilter } from './MileageFilter';
 import { Tooltip } from './Tooltip';
 
 export interface FilterOptions {
+  make_id?:number;
+  model_id?:number;
   make?: string;
   model?: string;
   yearFrom?: number;
@@ -36,14 +38,12 @@ interface FiltersProps {
   onSearch: () => void;
 }
 
-export function Filters({ 
-  filters, 
-  onFilterChange, 
-  onClearFilters, 
-  hasActiveFilters,
-  onSearch
-}: FiltersProps) {
+
+
+export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilters, onSearch }: FiltersProps) {
+
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [make_id_selected, set_make_id_selected] = useState(null);
 
   const updateFilter = (key: keyof FilterOptions, value: any) => {
     if (key === 'make' && value !== filters.make) {
@@ -86,7 +86,7 @@ export function Filters({
           {hasActiveFilters && (
             <button
               onClick={onClearFilters}
-              className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 
+              className="group flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700
                        bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-200"
             >
               <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
@@ -96,11 +96,14 @@ export function Filters({
         </div>
 
         <div className="space-y-6">
-          <MakeModelFilter
-            make={filters.make}
-            model={filters.model}
-            onMakeChange={(value) => updateFilter('make', value)}
-            onModelChange={(value) => updateFilter('model', value)}
+
+        <MakeFilter
+            make_id={make_id_selected}
+            onChangeMake={set_make_id_selected}
+          />
+
+        <ModelFilter
+            make_id={make_id_selected}
           />
 
           <YearFilter
@@ -220,12 +223,12 @@ export function Filters({
                   onChange={(e) => updateFilter('hasImage', e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
-                            peer-focus:ring-teal-300 rounded-full peer 
-                            peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
-                            peer-checked:after:border-white after:content-[''] after:absolute 
-                            after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 
-                            after:border after:rounded-full after:h-5 after:w-5 after:transition-all 
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4
+                            peer-focus:ring-teal-300 rounded-full peer
+                            peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
+                            peer-checked:after:border-white after:content-[''] after:absolute
+                            after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300
+                            after:border after:rounded-full after:h-5 after:w-5 after:transition-all
                             peer-checked:bg-teal-600"></div>
                 <span className="ms-3 text-sm font-medium text-gray-700">
                   Only show listings with images
@@ -239,7 +242,7 @@ export function Filters({
           onClick={onSearch}
           className="w-full relative group overflow-hidden rounded-xl"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-teal-500 opacity-90 
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-teal-500 opacity-90
                        group-hover:opacity-100 transition-opacity"></div>
           <div className="relative px-6 py-3 flex items-center justify-center gap-2">
             <Search className="w-5 h-5 text-white" />

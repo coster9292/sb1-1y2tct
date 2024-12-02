@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Info, MapPin, Fuel, Settings, Calendar, Activity } from 'lucide-react';
 import { getCarById } from '../api/cars';
-import { Car } from '../interfaces/car';
+import { ICar } from '../interfaces/ICar';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
 import { CarDetailsHeader } from '../components/car-details/CarDetailsHeader';
 import { CarImage } from '../components/car-details/CarImage';
 import { CarDetailItem } from '../components/car-details/CarDetailItem';
 
+
+
 export function CarDetailsPage() {
   const { carId } = useParams();
-  const [car, setCar] = useState<Car | null>(null);
+  const [car, setCar] = useState<ICar | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,6 +35,7 @@ export function CarDetailsPage() {
 
     fetchCar();
   }, [carId]);
+  
 
   if (loading) {
     return (

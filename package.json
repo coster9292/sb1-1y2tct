@@ -8,10 +8,13 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "export PORT=3238 && pm2 start server/index.js --name 'autoyard-frontend'"
+    "server": "export PORT=3238 && pm2 start server/index.js --name 'autoyard-frontend'",
+    "inst": "rm -rf node_modules && rm package-lock.json && npm install",
+    "inst-win": "rmdir /S /Q node_modules && del package-lock.json && npm install"
   },
   "dependencies": {
     "@mikosoft/spa-server": "^2.0.2",
+    "@mikosoft/httpclient-bro": "^1.1.1",
     "@radix-ui/react-slider": "^1.1.2",
     "axios": "^1.6.7",
     "lucide-react": "^0.344.0",
