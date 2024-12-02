@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getCarsByIds } from '../api/cars';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 import { useNegotiations } from '../hooks/useNegotiations';
 
 export function NegotiationsPage() {

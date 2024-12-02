@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car } from '../../types/car';
+import { Car } from '../../interfaces/car';
 import { MapPin, Fuel, Settings, Calendar, Activity, BadgeCheck } from 'lucide-react';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../../utils/formatters';
 

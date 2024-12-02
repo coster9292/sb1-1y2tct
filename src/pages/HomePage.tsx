@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { CarList } from '../components/CarList';
 import { Filters, FilterOptions } from '../components/Filters';
 import { searchCars } from '../api/cars';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 
 const ITEMS_PER_PAGE = 100;
 

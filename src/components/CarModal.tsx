@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, MapPin, Fuel, Settings, Calendar, Info, ArrowLeft, Activity, Image as ImageIcon } from 'lucide-react';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
 
 interface CarModalProps {

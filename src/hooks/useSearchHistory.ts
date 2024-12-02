@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { SearchRecord } from '../types/search';
+import { SearchRecord } from '../interfaces/search';
 
 const getStorageKey = (userId: string) => `autoyard_search_history_${userId}`;
 

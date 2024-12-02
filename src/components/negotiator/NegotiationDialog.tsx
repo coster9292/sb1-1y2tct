@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Car } from '../../types/car';
+import { Car } from '../../interfaces/car';
 import { X, MessageSquare, Loader } from 'lucide-react';
 import { formatCarBrand, formatCarModel } from '../../utils/formatters';
 

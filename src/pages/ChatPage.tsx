@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useNegotiations } from '../hooks/useNegotiations';
 import { getCarById } from '../api/cars';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 
 // ... rest of the imports
 

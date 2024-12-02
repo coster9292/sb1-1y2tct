@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpDown } from 'lucide-react';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 import { CarCard } from './CarCard';
 import { LoadMoreButton } from './LoadMoreButton';
 

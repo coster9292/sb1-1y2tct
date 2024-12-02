@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { Car } from '../types/car';
-import { SearchRecord } from '../types/search';
+import { Car } from '../interfaces/car';
+import { SearchRecord } from '../interfaces/search';
 import { useSearchHistory } from '../hooks/useSearchHistory';
 import { useAuth } from '../contexts/AuthContext';
 import { Bot, History, Trash2, BookMarked, Search } from 'lucide-react';

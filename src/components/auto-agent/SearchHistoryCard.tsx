@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchRecord } from '../../types/search';
+import { SearchRecord } from '../../interfaces/search';
 import { RotateCcw, Trash2, Clock, Search } from 'lucide-react';
 import { formatCarBrand, formatCarModel } from '../../utils/formatters';
 

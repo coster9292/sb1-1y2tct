@@ -1,9 +1,9 @@
 import React from 'react';
 import { Clock } from 'lucide-react';
-import { SearchCriteria } from '../../types/negotiations';
+import { SearchCriteria } from '../../interfaces/negotiations';
 import { NegotiationCard } from './NegotiationCard';
 import { formatCarBrand, formatCarModel } from '../../utils/formatters';
-import { NegotiationItem } from '../../types/negotiations';
+import { NegotiationItem } from '../../interfaces/negotiations';
 
 interface NegotiationGroupProps {
   criteria: SearchCriteria;

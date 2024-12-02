@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Fuel, Settings, Calendar, Activity, Info, ExternalLink } from 'lucide-react';
 import { getCarById } from '../api/cars';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
 
 export function CarListingPage() {

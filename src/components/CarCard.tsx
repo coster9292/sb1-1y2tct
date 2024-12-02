@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapPin, Fuel, Settings, Calendar, Activity, Image as ImageIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Car } from '../types/car';
+import { Car } from '../interfaces/car';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
 
 interface CarCardProps {

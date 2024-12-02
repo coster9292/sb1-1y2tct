@@ -1,7 +1,7 @@
 import React from 'react';
 import { MessageSquare, Link as LinkIcon } from 'lucide-react';
 import { formatCarBrand, formatCarModel, formatCarVersion } from '../../utils/formatters';
-import { NegotiationItem } from '../../types/negotiations';
+import { NegotiationItem } from '../../interfaces/negotiations';
 import { useNavigate } from 'react-router-dom';
 
 interface NegotiationCardProps {

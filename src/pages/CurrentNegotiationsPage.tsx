@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNegotiations } from '../hooks/useNegotiations';
 import { NegotiationGroup } from '../components/negotiations/NegotiationGroup';
-import { GroupedNegotiations } from '../types/negotiations';
+import { GroupedNegotiations } from '../interfaces/negotiations';
 
 export function CurrentNegotiationsPage() {
   const { negotiations } = useNegotiations();

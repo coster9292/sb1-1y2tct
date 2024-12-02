@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { NegotiationItem } from '../types/negotiations';
+import { NegotiationItem } from '../interfaces/negotiations';
 
 const getStorageKey = (userId: string) => `autoyard_negotiations_${userId}`;
 
@@ -21,7 +21,7 @@ export function useNegotiations() {
   // Load negotiations from localStorage on mount or when user changes
   useEffect(() => {
     if (!user) return;
-    
+
     try {
       const stored = localStorage.getItem(getStorageKey(user.id));
       if (stored) {
@@ -37,7 +37,7 @@ export function useNegotiations() {
   // Save negotiations to localStorage whenever they change
   useEffect(() => {
     if (!user) return;
-    
+
     try {
       localStorage.setItem(getStorageKey(user.id), JSON.stringify(negotiations));
     } catch (error) {
@@ -59,9 +59,9 @@ export function useNegotiations() {
   const updateNegotiation = (carId: number, updates: Partial<NegotiationItem>) => {
     if (!user) return;
 
-    setNegotiations(prev => 
-      prev.map(item => 
-        item.car.car_id === carId 
+    setNegotiations(prev =>
+      prev.map(item =>
+        item.car.car_id === carId
           ? { ...item, ...updates, lastUpdated: new Date() }
           : item
       )
@@ -70,7 +70,7 @@ export function useNegotiations() {
 
   const removeNegotiation = (carId: number) => {
     if (!user) return;
-    
+
     setNegotiations(prev => prev.filter(item => item.car.car_id !== carId));
   };
 
