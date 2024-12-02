@@ -93,4 +93,5 @@ export function ChatPage() {
   };
 
   // Rest of the component remains the same
+  return '';
 }

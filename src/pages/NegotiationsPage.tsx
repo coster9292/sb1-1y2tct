@@ -51,4 +51,6 @@ export function NegotiationsPage() {
   }, [carIds, user, addNegotiations]);
 
   // Rest of the component remains the same
+
+  return '';
 }

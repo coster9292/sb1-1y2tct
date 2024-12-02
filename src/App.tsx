@@ -1,11 +1,10 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { LandingPage } from './pages/LandingPage';
 import { HomePage } from './pages/HomePage';
-import { CarListingPage } from './pages/CarListingPage';
+// import { CarListingPage } from './pages/CarListingPage';
 import { CarDetailsPage } from './pages/CarDetailsPage';
-import { SmartNegotiatorPage } from './pages/SmartNegotiatorPage';
+// import { SmartNegotiatorPage } from './pages/SmartNegotiatorPage';
 import { AutoAgentPage2 } from './pages/AutoAgentPage2';
 import { NegotiationsPage } from './pages/NegotiationsPage';
 import { ChatPage } from './pages/ChatPage';
