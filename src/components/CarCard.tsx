@@ -1,33 +1,26 @@
-import React from 'react';
 import { MapPin, Fuel, Settings, Calendar, Activity, Image as ImageIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Car } from '../interfaces/car';
-import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
+import { ICar } from '../interfaces/ICar';
+// import { formatCarBrand, formatCarModel, formatCarVersion } from '../utils/formatters';
 
 interface CarCardProps {
-  car: Car;
+  car: ICar;
 }
 
 export function CarCard({ car }: CarCardProps) {
   const navigate = useNavigate();
-  const formattedMake = formatCarBrand(car.make);
-  const formattedModel = formatCarModel(car.model);
-  const formattedVersion = car.version ? formatCarVersion(car.version) : '';
 
-  const title = `${formattedMake} ${formattedModel}${formattedVersion ? ` (${formattedVersion})` : ''}`;
+  const title = `${car.make} ${car.model}${car.version ? ` (${car.version})` : ''}`;
 
-  const formatNumber = (num: number) => {
-    return num.toLocaleString('en-US');
-  };
 
   const handleClick = () => {
-    navigate(`/cars/${car.car_id}`);
+    navigate(`/cars/${car.id}`);
   };
 
   return (
-    <div 
+    <div
       onClick={handleClick}
-      className="group relative bg-white rounded-xl shadow-sm border border-gray-100 
+      className="group relative bg-white rounded-xl shadow-sm border border-gray-100
                  overflow-hidden transition-all duration-300 ease-in-out
                  hover:shadow-lg hover:border-gray-200 hover:-translate-y-1 cursor-pointer"
     >
@@ -54,7 +47,7 @@ export function CarCard({ car }: CarCardProps) {
               {title}
             </h3>
             <p className="mt-2 text-2xl font-bold text-teal-600">
-              €{formatNumber(car.price)}
+              €{car.price_eur}
             </p>
           </div>
 
@@ -62,13 +55,13 @@ export function CarCard({ car }: CarCardProps) {
             {car.mileage_km && (
               <div className="flex items-center gap-2.5 text-gray-600">
                 <Activity className="h-4 w-4 text-gray-400" />
-                <span className="text-sm">{formatNumber(car.mileage_km)} km</span>
+                <span className="text-sm">{car.mileage_km} km</span>
               </div>
             )}
-            {car.location && (
+            {car.country_id && (
               <div className="flex items-center gap-2.5 text-gray-600">
                 <MapPin className="h-4 w-4 text-gray-400" />
-                <span className="text-sm">{car.location}</span>
+                <span className="text-sm">{car.country_id}</span>
               </div>
             )}
             <div className="flex flex-wrap gap-4">

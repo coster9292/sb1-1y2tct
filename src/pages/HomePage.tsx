@@ -1,19 +1,19 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { CarList } from '../components/CarList';
-import { Filters, FilterOptions } from '../components/Filters';
+import { Filters } from '../components/Filters';
 import { searchCars } from '../api/cars';
-import { Car } from '../interfaces/car';
+import { ICar, ICarSearchParams } from '../interfaces';
 
 const ITEMS_PER_PAGE = 100;
 
 export function HomePage() {
   const location = useLocation();
-  const [cars, setCars] = useState<Car[]>([]);
+  const [cars, setCars] = useState<ICar[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [filters, setFilters] = useState<FilterOptions>({});
+  const [filters, setFilters] = useState<ICarSearchParams>({});
   const [page, setPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -21,8 +21,8 @@ export function HomePage() {
   // Parse URL parameters on mount
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const urlFilters: FilterOptions|any = {};
-    
+    const urlFilters: ICarSearchParams|any = {};
+
     // Map URL parameters to filter options
     searchParams.forEach((value, key) => {
       if (key === 'yearFrom' || key === 'priceTo' || key === 'mileageFrom' || key === 'mileageTo') {
@@ -57,7 +57,7 @@ export function HomePage() {
         await new Promise(r => setTimeout(r, 100));
 
         const { cars: newCars, total } = await searchCars(
-          '', 
+          '',
           searchFilters,
           page,
           ITEMS_PER_PAGE
@@ -92,7 +92,7 @@ export function HomePage() {
   };
 
   // Handle filter change and reset pagination
-  const handleFilterChange = (newFilters: FilterOptions) => {
+  const handleFilterChange = (newFilters: ICarSearchParams) => {
     setFilters(newFilters);
     setCars([]);
     setPage(1);

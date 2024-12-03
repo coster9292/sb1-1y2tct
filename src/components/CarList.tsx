@@ -1,11 +1,11 @@
 import React from 'react';
 import { ArrowUpDown } from 'lucide-react';
-import { Car } from '../interfaces/car';
+import { ICar } from '../interfaces/ICar';
 import { CarCard } from './CarCard';
 import { LoadMoreButton } from './LoadMoreButton';
 
 interface CarListProps {
-  cars: Car[];
+  cars: ICar[];
   loading: boolean;
   error: string | null;
   hasMore: boolean;
@@ -13,25 +13,32 @@ interface CarListProps {
   totalItems: number;
 }
 
-export function CarList({ 
-  cars, 
-  loading, 
-  error, 
+export function CarList({
+  cars,
+  loading,
+  error,
   hasMore,
   onLoadMore,
   totalItems
 }: CarListProps) {
   const [sortOrder, setSortOrder] = React.useState<'asc' | 'desc'>('asc');
 
+
   const sortedCars = React.useMemo(() => {
     return [...cars].sort((a, b) => {
-      return sortOrder === 'asc' ? a.price - b.price : b.price - a.price;
+      // Ensure price_eur is defined
+      if (a.price_eur === undefined) return 1;
+      if (b.price_eur === undefined) return -1;
+
+      return sortOrder === 'asc' ? a.price_eur - b.price_eur : b.price_eur - a.price_eur;
     });
   }, [cars, sortOrder]);
+
 
   const toggleSort = () => {
     setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
   };
+
 
   if (loading && cars.length === 0) {
     return (
@@ -63,8 +70,8 @@ export function CarList({
       <div className="flex items-center justify-end">
         <button
           onClick={toggleSort}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 
-                   bg-white border border-gray-200 rounded-lg hover:bg-gray-50 
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700
+                   bg-white border border-gray-200 rounded-lg hover:bg-gray-50
                    transition-colors duration-200"
         >
           <ArrowUpDown className="w-4 h-4" />
@@ -74,13 +81,13 @@ export function CarList({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortedCars.map((car) => (
-          <CarCard key={car.car_id} car={car} />
+          <CarCard key={car.id} car={car} />
         ))}
       </div>
 
       {hasMore && (
-        <LoadMoreButton 
-          onClick={onLoadMore} 
+        <LoadMoreButton
+          onClick={onLoadMore}
           loading={loading}
         />
       )}

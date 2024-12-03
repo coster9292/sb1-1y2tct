@@ -11,42 +11,17 @@ import { TransmissionFilter } from './filters/TransmissionFilter';
 import { FuelTypeFilter } from './filters/FuelTypeFilter';
 import { Tooltip } from './Tooltip';
 
-export interface FilterOptions {
-  make_id?:number;
-  model_id?:number;
-  make?: string;
-  model?: string;
-  yearFrom?: number;
-  minPrice?: number;
-  maxPrice?: number;
-  minMileage?: number;
-  maxMileage?: number;
-  transmission?: string;
-  fuel?: string;
-  color?: string;
-  doors?: string;
-  location?: string;
-  hasImage?: boolean;
-}
-
-interface FiltersProps {
-  filters: FilterOptions;
-  onFilterChange: (filters: FilterOptions) => void;
-  onClearFilters: () => void;
-  hasActiveFilters: boolean;
-  totalResults?: number;
-  onSearch: () => void;
-}
+import {ICarSearchParams} from '../interfaces';
 
 
 
-export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilters, onSearch }: FiltersProps) {
+export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilters, onSearch }: any) {
 
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [make_id_selected, set_make_id_selected] = useState(null);
+  const [makeIdSelected, setMakeIdSelected] = useState(null);
 
-  const updateFilter = (key: keyof FilterOptions, value: any) => {
-    if (key === 'make' && value !== filters.make) {
+  const updateFilter = (key: keyof ICarSearchParams, value: any) => {
+    if (key === 'make_id' && value !== filters.make) {
       onFilterChange({ ...filters, [key]: value || undefined, model: undefined });
     } else {
       onFilterChange({ ...filters, [key]: value || undefined });
@@ -98,17 +73,17 @@ export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilt
         <div className="space-y-6">
 
         <MakeFilter
-            make_id={make_id_selected}
-            onChangeMake={set_make_id_selected}
+            make_id={makeIdSelected}
+            onChangeMake={setMakeIdSelected}
           />
 
         <ModelFilter
-            make_id={make_id_selected}
+            make_id={makeIdSelected}
           />
 
           <YearFilter
             value={filters.yearFrom}
-            onChange={(value) => updateFilter('yearFrom', value)}
+            onChange={(value) => updateFilter('year_from', value)}
           />
 
           <PriceRangeFilter
@@ -154,7 +129,7 @@ export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilt
           <div className="pt-4 border-t border-gray-100">
             <LocationFilter
               value={filters.location}
-              onChange={(value) => updateFilter('location', value)}
+              onChange={(value) => updateFilter('country', value)}
             />
 
             <div className="mt-6">
@@ -220,7 +195,7 @@ export function Filters({ filters, onFilterChange, onClearFilters, hasActiveFilt
                 <input
                   type="checkbox"
                   checked={filters.hasImage || false}
-                  onChange={(e) => updateFilter('hasImage', e.target.checked)}
+                  onChange={(e) => updateFilter('has_image', e.target.checked)}
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4
